@@ -6,14 +6,17 @@ let windDisplay = document.querySelector('#wind');
 let humidDisplay = document.querySelector('#humid');
 let uviDisplay = document.querySelector('#uvi');
 let weatherIcon = document.querySelector('.weather-icon');
-let citySearchList = document.querySelector('city-search-list');
+let citySearchList = document.querySelector('#city-search-list');
 let searchedCity;
+let iconNumber;
+let storageArray = [];
 
 function fiveDay() {
-    // searchBtnCreater();
     searchedCity = document.querySelector('#searched-city').value;
-    let requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=b84e6d496a10f1cb5dfbeeca267b17d6`;
+    searchBtnCreater();
 
+    let requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=b84e6d496a10f1cb5dfbeeca267b17d6`;
+    
     fetch(requestUrl)
       .then(function (responce) {
           return responce.json();
@@ -39,16 +42,19 @@ function fiveDay() {
             windDisplay.textContent = currenSet.current.wind_speed + " MPH";
             humidDisplay.textContent = currenSet.current.humidity;
             uviDisplay.textContent = currenSet.current.uviDisplay;
-            let icon = currenSet.current.weather[0].icon;
-            weatherIcon.innerHTML = `<img src='/Assets/images/${icon}.png'/>`;
+            iconNumber = currenSet.current.weather[0].icon;
+            weatherIcon.innerHTML = `<img src='/Assets/images/${iconNumber}.png'/>`;
             // changing date
-            $('.five-card .card-title').each(function(){
-                let dayNumber = $(this).attr('data-number');
+            $('.five-card .card').each(function(){
+                let dayNumber = parseInt($(this).find('.card-title').attr('data-number'));
                 let selectedDate = currenSet.daily[dayNumber];
-                // $('.card-title').text() = dateConverter(selectedDate.dt);
-                // $('.temp').text() = selectedDate.temp.day;
-                // $('.wind').text() = selectedDate.wind_speed;
-                // $('.humid').text() = selectedDate.humidity;
+                iconNumber = currenSet.daily[dayNumber].weather[0].icon;
+            
+                $(this).find('.card-title').text(dateConverter(selectedDate.dt));
+                $(this).find('.temp').text(tempConverter(selectedDate.temp.day) + '°F');
+                $(this).find('.wind').text(selectedDate.wind_speed + " MPH");
+                $(this).find('.humid').text(selectedDate.humidity);
+                $(this).find('.weather-icon').html(`<img src='/Assets/images/${iconNumber}.png'/>`);
                 // $('.card-title').text() = 'test'
 
                 // console.log(selectedDate);
@@ -75,17 +81,25 @@ function fiveDay() {
         return fahrenheit;
     }
 
-    // function searchBtnCreater() {
-    //     // let btnList = document.createElement('li');
-    //     let oldSearchBtn = document.createElement('BUTTON');
-    //     oldSearchBtn.innerHTML = searchedCity;
-    //     citySearchList.append(oldSearchBtn);
-    //     // citySearchList.append(btnList);
-    //     // localStorage.setItem()
+    function searchBtnCreater() {
+        let btnLi = document.createElement('li');
+        let oldSearchBtn = document.createElement('button');
+        oldSearchBtn.textContent = searchedCity;
+        btnLi.append(oldSearchBtn);
+        citySearchList.append(btnLi);
+        // storageArray.push(searchedCity);
+        localStorage.setItem('searchedCity', searchedCity);
         
-
-    // }
-
+        
+        
+    }
+    
+    function retrieveSrchBtn (){
+        for(let i=0; i < storageArray.length; i++){
+    
+        }
+        
+    }
 
 cityBtn.addEventListener('click',fiveDay);
 
