@@ -11,10 +11,16 @@ let searchedCity;
 let iconNumber;
 let storageArray = [];
 
+retrieveSrchBtn();
+
 function fiveDay() {
     searchedCity = document.querySelector('#searched-city').value;
     searchBtnCreater();
+    searchWeather(searchedCity);
+    
 
+    }
+function searchWeather(searchedCity){ 
     let requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=b84e6d496a10f1cb5dfbeeca267b17d6`;
     
     fetch(requestUrl)
@@ -65,9 +71,7 @@ function fiveDay() {
         
     })
     })
-
-    }
-
+}
     function dateConverter(dt){
         let date = new Date(dt*1000);
         let month = date.getMonth() + 1;
@@ -82,24 +86,39 @@ function fiveDay() {
     }
 
     function searchBtnCreater() {
+        for (let i=0; i < storageArray.length; i++){
+            if (storageArray[i] === searchedCity){
+                return;
+            }
+        }
         let btnLi = document.createElement('li');
         let oldSearchBtn = document.createElement('button');
         oldSearchBtn.textContent = searchedCity;
         btnLi.append(oldSearchBtn);
         citySearchList.append(btnLi);
-        // storageArray.push(searchedCity);
-        localStorage.setItem('searchedCity', searchedCity);
+        storageArray.push(searchedCity);
+        localStorage.setItem('storageArray', JSON.stringify(storageArray));
         
         
         
     }
     
     function retrieveSrchBtn (){
+        storageArray = JSON.parse(localStorage.getItem('storageArray')) || [];
+        // citySearchList.innerHTML = '';
         for(let i=0; i < storageArray.length; i++){
-    
+            let btnLi = document.createElement('li');
+            let oldSearchBtn = document.createElement('button');
+            oldSearchBtn.textContent = storageArray[i];
+            btnLi.append(oldSearchBtn);
+            citySearchList.append(btnLi);
         }
         
     }
+
+    $('#city-search-list').on('click',function(event) {
+      searchWeather(event.target.textContent)
+    })
 
 cityBtn.addEventListener('click',fiveDay);
 
