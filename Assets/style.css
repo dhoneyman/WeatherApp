@@ -1,3 +1,18 @@
 main {
     background-color: rgb(90, 133, 199);
 }
+
+li {
+    list-style: none;
+
+}
+
+
+li > button {
+    /* width: 250px; */
+
+}
+
+ul {
+    width: 180px;
+}

@@ -7,6 +7,8 @@ let humidDisplay = document.querySelector('#humid');
 let uviDisplay = document.querySelector('#uvi');
 let weatherIcon = document.querySelector('.weather-icon');
 let citySearchList = document.querySelector('#city-search-list');
+let forcast = document.querySelector('#forcast');
+let uvi = document.querySelector('#uvi');
 let searchedCity;
 let iconNumber;
 let storageArray = [];
@@ -44,11 +46,13 @@ function searchWeather(searchedCity){
         .then(function (currenSet) {
             console.log(currenSet)
             
+            forcast.textContent = currenSet.current.weather[0].main;
             tempDisplay.textContent = tempConverter(currenSet.current.temp)+ '°F';
             windDisplay.textContent = currenSet.current.wind_speed + " MPH";
             humidDisplay.textContent = currenSet.current.humidity;
             uviDisplay.textContent = currenSet.current.uviDisplay;
             iconNumber = currenSet.current.weather[0].icon;
+            uvi.textContent = currenSet.current.uvi;
             weatherIcon.innerHTML = `<img src='/Assets/images/${iconNumber}.png'/>`;
             // changing date
             $('.five-card .card').each(function(){
@@ -57,11 +61,12 @@ function searchWeather(searchedCity){
                 iconNumber = currenSet.daily[dayNumber].weather[0].icon;
             
                 $(this).find('.card-title').text(dateConverter(selectedDate.dt));
+                $(this).find('.card-subtitle').text(selectedDate.weather[0].main);
                 $(this).find('.temp').text(tempConverter(selectedDate.temp.day) + '°F');
                 $(this).find('.wind').text(selectedDate.wind_speed + " MPH");
                 $(this).find('.humid').text(selectedDate.humidity);
                 $(this).find('.weather-icon').html(`<img src='/Assets/images/${iconNumber}.png'/>`);
-                // $('.card-title').text() = 'test'
+                $(this).find('#uvi').text(selectedDate.uvi);
 
                 // console.log(selectedDate);
 
@@ -88,7 +93,6 @@ function searchWeather(searchedCity){
     function searchBtnCreater() {
         for (let i=0; i < storageArray.length; i++){
             if (storageArray[i] === searchedCity){
-                return;
             }
         }
         let btnLi = document.createElement('li');
