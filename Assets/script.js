@@ -74,14 +74,19 @@ function searchWeather(searchedCity){
 
                 // console.log(dateConverter(selectedDate));
                 if(currenSet.current.uvi < 3){
-                    $('.uvi .current').addClass('bg-success');
+                    $('#uvip').addClass('bg-success');
+                    $('#uvip').removeClass('bg-warning');
+                    $('#uvip').removeClass('bg-danger');
                 }
                 else if(currenSet.current.uvi > 2 && currenSet.current.uvi < 7){
-                    $('.uvi .current').addClass('bg-warning');
-                    $('.uvi .current').removeClass('bg-success');
+                    $('#uvip').addClass('bg-warning');
+                    $('#uvip').removeClass('bg-success');
+                    $('#uvip').removeClass('bg-danger');
                 } else if(currenSet.current.uvi > 6){
-                    $('.uvi .current').addClass('bg-warning');
-                    $('.uvi .current').removeClass('bg-success');
+                    $('#uvip').addClass('bg-danger');
+                    $('#uvip').removeClass('bg-success');
+                    $('#uvip').removeClass('bg-warning');
+
                 }
             
             
