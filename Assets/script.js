@@ -53,7 +53,7 @@ function searchWeather(searchedCity){
             uviDisplay.textContent = currenSet.current.uviDisplay;
             iconNumber = currenSet.current.weather[0].icon;
             uvi.textContent = currenSet.current.uvi;
-            weatherIcon.innerHTML = `<img src='/Assets/images/${iconNumber}.png'/>`;
+            weatherIcon.innerHTML = `<img src='./assets/images/${iconNumber}.png'/>`;
 
 
             // changing date
@@ -67,7 +67,7 @@ function searchWeather(searchedCity){
                 $(this).find('.temp').text(tempConverter(selectedDate.temp.day) + '°F');
                 $(this).find('.wind').text(selectedDate.wind_speed + " MPH");
                 $(this).find('.humid').text(selectedDate.humidity);
-                $(this).find('.weather-icon').html(`<img src='/Assets/images/${iconNumber}.png'/>`);
+                $(this).find('.weather-icon').html(`<img src='./assets/images/${iconNumber}.png'/>`);
                 $(this).find('#uvi').text(selectedDate.uvi);
 
                 // console.log(selectedDate);
