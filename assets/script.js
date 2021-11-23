@@ -112,6 +112,7 @@ function searchWeather(searchedCity){
     function searchBtnCreater() {
         for (let i=0; i < storageArray.length; i++){
             if (storageArray[i] === searchedCity){
+                return;
             }
         }
         let btnLi = document.createElement('li');
