@@ -20,19 +20,19 @@ function fiveDay() {
     searchBtnCreater();
     searchWeather(searchedCity);
     
-
-    }
+    
+}
 function searchWeather(searchedCity){ 
     let requestUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${searchedCity}&appid=b84e6d496a10f1cb5dfbeeca267b17d6`;
     
     fetch(requestUrl)
-      .then(function (responce) {
-          return responce.json();
-      })
-      .then(function (fiveDay) {
+    .then(function (responce) {
+        return responce.json();
+    })
+    .then(function (fiveDay) {
         console.log(fiveDay)
         cityDisplay.textContent = fiveDay.city.name;
-
+        
         let lat = fiveDay.city.coord.lat;
         let lon = fiveDay.city.coord.lon;
         
@@ -54,6 +54,8 @@ function searchWeather(searchedCity){
             iconNumber = currenSet.current.weather[0].icon;
             uvi.textContent = currenSet.current.uvi;
             weatherIcon.innerHTML = `<img src='/Assets/images/${iconNumber}.png'/>`;
+
+
             // changing date
             $('.five-card .card').each(function(){
                 let dayNumber = parseInt($(this).find('.card-title').attr('data-number'));
@@ -71,6 +73,18 @@ function searchWeather(searchedCity){
                 // console.log(selectedDate);
 
                 // console.log(dateConverter(selectedDate));
+                if(currenSet.current.uvi < 3){
+                    $('.uvi .current').addClass('bg-success');
+                }
+                else if(currenSet.current.uvi > 2 && currenSet.current.uvi < 7){
+                    $('.uvi .current').addClass('bg-warning');
+                    $('.uvi .current').removeClass('bg-success');
+                } else if(currenSet.current.uvi > 6){
+                    $('.uvi .current').addClass('bg-warning');
+                    $('.uvi .current').removeClass('bg-success');
+                }
+            
+            
             })
             
         
@@ -126,3 +140,13 @@ function searchWeather(searchedCity){
 
 cityBtn.addEventListener('click',fiveDay);
 
+
+function uviColorSwitcher(){
+    if(currenSet.current.uvi > 2 && currenSet.current.uvi < 7){
+        $('#uvi').addClass('bg-warning');
+        $('#uvi').removeClass('bg-success');
+    } else if(currenSet.current.uvi > 6){
+        $('#uvi').addClass('bg-warning');
+        $('#uvi').removeClass('bg-success');
+    }
+}
