@@ -14,4 +14,4 @@ https://dhoneyman.github.io/DailyEventPlanner/
 
 ![screen shot of work day scheduler](assets/images/ss1.png)
 ![screen shot of work day scheduler](assets/images/ss2.png)
-![screen shot of work day scheduler](assets/images/ss3ß.png)
+![screen shot of work day scheduler](assets/images/ss3.png)
